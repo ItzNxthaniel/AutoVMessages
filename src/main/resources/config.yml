@@ -1,0 +1,19 @@
+#################################
+#   AutoVMessages Config File   #
+#################################
+
+# Interval in Seconds
+interval: 60
+
+# EXAMPLE:
+#   example_message: (custom message id)
+#     server: all (Individual Server Name, Array of Servers, or All`
+#     message: (One line message, or multiple)
+#       - "Cool <red>Message</red>"
+#       - "2nd Line"
+messages:
+  example_message:
+    server: all
+    message:
+      - "Cool <red>Message</red>"
+      - "2nd Line"

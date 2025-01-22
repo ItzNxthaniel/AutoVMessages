@@ -1,2 +1,4 @@
-package dev.itznxthaniel.autoVMessages.handlers;public class MessageHandler {
+package dev.itznxthaniel.autoVMessages.handlers;
+
+public class MessageHandler {
 }

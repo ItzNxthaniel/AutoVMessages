@@ -1,0 +1,11 @@
+###############################
+#   AutoVMessages Lang File   #
+###############################
+
+autovmessages:
+  prefix: "<#202020>[<#CC3333>AutoVMessage<#202020>] "
+  command:
+    no-perms: "<gray>You do not have permission to run this command."
+    avm:
+      core-successful: "<gray>Version: <red>v1.0.0-SNAPSHOT."
+      reload-successful: "<gray>Reloading AutoVMessage."
