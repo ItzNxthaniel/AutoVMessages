@@ -1,6 +1,7 @@
 package dev.itznxthaniel.autoVMessages.commands;
 
 import com.mojang.brigadier.context.CommandContext;
+import com.velocitypowered.api.command.CommandSource;
 import dev.itznxthaniel.autoVMessages.AutoVMessages;
 
 public interface IAVMCommand {
@@ -13,6 +14,6 @@ public interface IAVMCommand {
         return null;
     }
 
-    void execute(AutoVMessages plugin, CommandContext context);
+    void execute(AutoVMessages plugin, CommandContext<CommandSource> context);
 
 }

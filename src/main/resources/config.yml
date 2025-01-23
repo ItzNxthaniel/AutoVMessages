@@ -2,18 +2,25 @@
 #   AutoVMessages Config File   #
 #################################
 
-# Interval in Seconds
+# Toggles debug for extra console messages.
+debug: false
+
+# Interval in seconds for sending messages
 interval: 60
 
-# EXAMPLE:
-#   example_message: (custom message id)
-#     server: all (Individual Server Name, Array of Servers, or All`
-#     message: (One line message, or multiple)
-#       - "Cool <red>Message</red>"
-#       - "2nd Line"
+# Messages configuration
+# You can define individual messages here with the following structure:
+# - id: Unique identifier for the message (e.g., "welcome_message")
+#   server: Server(s) to display the message on. Can be:
+#           - A single server (e.g., "Towny")
+#           - An array of servers (e.g., ["Lobby", "Towny"])
+#           - "all" to target all servers
+#   message: The message content. Can be:
+#            - A single line (e.g., "Join our Discord!")
+#            - Multiple lines as a list
 messages:
   example_message:
-    server: all
+    servers: "all"
     message:
       - "Cool <red>Message</red>"
       - "2nd Line"

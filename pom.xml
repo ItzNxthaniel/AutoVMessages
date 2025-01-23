@@ -10,67 +10,17 @@
     <packaging>jar</packaging>
 
     <name>AutoVMessages</name>
+    <description>A Velocity plugin to set up automatic messages for your proxy.</description>
 
     <properties>
         <java.version>17</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <itznxthaniel.velocityId>autovmessages</itznxthaniel.velocityId>
+        <itznxthaniel.velocityName>${project.name}</itznxthaniel.velocityName>
+        <itznxthaniel.velocityVersion>v${project.version}</itznxthaniel.velocityVersion>
+        <itznxthaniel.velocityDescription>${project.description}</itznxthaniel.velocityDescription>
+        <itznxthaniel.velocityAuthor>ItzNxthaniel</itznxthaniel.velocityAuthor>
     </properties>
-
-    <profiles>
-        <profile>
-            <id>release</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-source-plugin</artifactId>
-                        <version>3.3.1</version>
-                        <executions>
-                            <execution>
-                                <id>attach-sources</id>
-                                <goals>
-                                    <goal>jar-no-fork</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-javadoc-plugin</artifactId>
-                        <version>3.6.3</version>
-                        <executions>
-                            <execution>
-                                <id>attach-javadocs</id>
-                                <goals>
-                                    <goal>jar</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-gpg-plugin</artifactId>
-                        <version>3.2.7</version>
-                        <executions>
-                            <execution>
-                                <id>sign-artifacts</id>
-                                <phase>verify</phase>
-                                <goals>
-                                    <goal>sign</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-                <resources>
-                    <resource>
-                        <directory>src/main/resources</directory>
-                        <filtering>true</filtering>
-                    </resource>
-                </resources>
-            </build>
-        </profile>
-    </profiles>
 
     <build>
         <defaultGoal>clean package</defaultGoal>
@@ -81,6 +31,46 @@
             </resource>
         </resources>
         <plugins>
+            <plugin>
+                <groupId>com.google.code.maven-replacer-plugin</groupId>
+                <artifactId>replacer</artifactId>
+                <version>1.5.3</version>
+                <executions>
+                    <execution>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>replace</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <includes>
+                        <include>${project.build.directory}\classes\velocity-plugin.json</include>
+                    </includes>
+                    <replacements>
+                        <replacement>
+                            <token>itznxthaniel_velocityid</token>
+                            <value>${itznxthaniel.velocityId}</value>
+                        </replacement>
+                        <replacement>
+                            <token>itznxthaniel_velocityname</token>
+                            <value>${itznxthaniel.velocityName}</value>
+                        </replacement>
+                        <replacement>
+                            <token>itznxthaniel_velocityversion</token>
+                            <value>${itznxthaniel.velocityVersion}</value>
+                        </replacement>
+                        <replacement>
+                            <token>itznxthaniel_velocitydescription</token>
+                            <value>${itznxthaniel.velocityDescription}</value>
+                        </replacement>
+                        <replacement>
+                            <token>itznxthaniel_velocityauthor</token>
+                            <value>${itznxthaniel.velocityAuthor}</value>
+                        </replacement>
+                    </replacements>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>

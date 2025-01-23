@@ -7,7 +7,6 @@ import com.velocitypowered.api.command.BrigadierCommand;
 import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.proxy.ProxyServer;
 import dev.itznxthaniel.autoVMessages.AutoVMessages;
-import net.kyori.adventure.text.Component;
 
 public final class AVMBrigadierCommand {
     public static BrigadierCommand createBrigadierCommand(AutoVMessages plugin) {
@@ -30,6 +29,7 @@ public final class AVMBrigadierCommand {
                                     builder.suggest(s);
                                 }
                             });
+
                             return builder.buildFuture();
                         })
                         .executes(context -> {

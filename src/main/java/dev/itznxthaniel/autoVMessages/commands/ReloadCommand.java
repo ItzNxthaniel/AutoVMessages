@@ -17,11 +17,12 @@ public class ReloadCommand implements IAVMCommand {
     }
 
     @Override
-    public void execute(AutoVMessages plugin, CommandContext context) {
-        CommandSource source = (CommandSource) context.getSource();
+    public void execute(AutoVMessages plugin, CommandContext<CommandSource> context) {
+        CommandSource source = context.getSource();
 
         plugin.getMessageHandler().sendPluginResponse(source, "autovmessages.command.avm.reload-in-progress");
 
-        AutoVMessages.getInstance().reload();
+        boolean reloaded = AutoVMessages.getInstance().reload();
+        if (reloaded) plugin.getMessageHandler().sendPluginResponse(source, "autovmessages.command.avm.successful");
     }
 }

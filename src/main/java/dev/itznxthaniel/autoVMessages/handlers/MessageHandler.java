@@ -1,8 +1,9 @@
 package dev.itznxthaniel.autoVMessages.handlers;
 
 import com.velocitypowered.api.command.CommandSource;
-import com.velocitypowered.api.proxy.Player;
+import com.velocitypowered.api.proxy.server.RegisteredServer;
 import dev.itznxthaniel.autoVMessages.AutoVMessages;
+import dev.itznxthaniel.autoVMessages.util.Message;
 import lombok.Getter;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
@@ -50,14 +51,17 @@ public class MessageHandler {
         YamlConfigurationLoader yamlConfigurationLoader = YamlConfigurationLoader.builder().file(langFile).build();
 
         try {
-            lang = yamlConfigurationLoader.load();
+            this.lang = yamlConfigurationLoader.load();
         } catch (IOException exception) {
             plugin.getLogger().error("Failed to load lang.yml", exception);
         }
     }
 
     private String replaceVariables(String string) {
-        string = string.replace("{pluginVersion}", "v1.0.0-SNAPSHOT");
+        string = string.replace("{pluginVersion}",
+                this.plugin.getServer().getPluginManager().getPlugin(AutoVMessages.PLUGIN_NAME.toLowerCase()).get()
+                        .getDescription().getVersion().get()
+        );
 
         return string;
     }
@@ -73,5 +77,11 @@ public class MessageHandler {
         Component deserializedResponse = this.miniMessage.deserialize(prefix + response);
 
         source.sendMessage(deserializedResponse);
+    }
+
+    public void sendAnnouncement(RegisteredServer server, Message message) {
+        Component deserializedMessage = this.miniMessage.deserialize(message.message());
+
+        server.sendMessage(deserializedMessage);
     }
 }

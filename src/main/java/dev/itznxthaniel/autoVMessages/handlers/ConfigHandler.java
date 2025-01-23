@@ -34,8 +34,10 @@ public class ConfigHandler {
 
         try {
             config = yamlConfigurationLoader.load();
+            if (config.node("debug").getBoolean()) AutoVMessages.DEBUG_ENABLED = true;
         } catch (IOException exception) {
             plugin.getLogger().error("Failed to load config.yml", exception);
         }
     }
+
 }

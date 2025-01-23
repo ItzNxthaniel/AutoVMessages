@@ -45,17 +45,15 @@ public class CommandHandler {
         commandManager.register(commandMeta, command);
     }
 
-    public void handleCommand(IAVMCommand command, CommandContext context) {
+    public void handleCommand(IAVMCommand command, CommandContext<CommandSource> context) {
         if (context.getSource() instanceof ConsoleCommandSource && command.isConsoleAllowed()) {
             command.execute(this.plugin, context);
-        } else if (context.getSource() instanceof Player player && command.getPermissionNode() != null) {
-            if (player.hasPermission(command.getPermissionNode())) {
+        } else if (context.getSource() instanceof Player player) {
+            if (command.getPermissionNode() == null || player.hasPermission(command.getPermissionNode())) {
                 command.execute(this.plugin, context);
             } else {
-                this.plugin.getMessageHandler().sendPluginResponse((CommandSource) context.getSource(), "autovmessages.command.no-perms");
+                this.plugin.getMessageHandler().sendPluginResponse(context.getSource(), "autovmessages.command.no-perms");
             }
-        } else {
-            command.execute(this.plugin, context);
         }
     }
 }
