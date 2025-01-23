@@ -7,11 +7,19 @@ import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.plugin.annotation.DataDirectory;
 import com.velocitypowered.api.proxy.ProxyServer;
 import dev.itznxthaniel.autoVMessages.handlers.CommandHandler;
+import dev.itznxthaniel.autoVMessages.handlers.ConfigHandler;
+import dev.itznxthaniel.autoVMessages.handlers.DataHandler;
+import dev.itznxthaniel.autoVMessages.handlers.MessageHandler;
+import lombok.Data;
 import lombok.Getter;
+import lombok.Setter;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 import net.kyori.adventure.text.minimessage.tag.standard.StandardTags;
 import org.slf4j.Logger;
+import org.slf4j.event.Level;
+import org.slf4j.event.LoggingEvent;
+import org.slf4j.spi.LoggingEventBuilder;
 
 import java.nio.file.Path;
 
@@ -31,8 +39,12 @@ public class AutoVMessages {
     private final ProxyServer server;
     private final Logger logger;
     private final Path dataDirectory;
-    private MiniMessage miniMessage;
     private CommandHandler commandHandler;
+    private DataHandler dataHandler;
+    @Getter @Setter
+    private ConfigHandler configHandler;
+    @Getter @Setter
+    private MessageHandler messageHandler;
 
     @Inject
     public AutoVMessages(ProxyServer server, Logger logger, @DataDirectory Path dataDirectory) {
@@ -44,20 +56,15 @@ public class AutoVMessages {
 
     @Subscribe
     public void onProxyInitialization(ProxyInitializeEvent event) {
-        logger.info("AutoVMessages init. Setting up.");
-
-        miniMessage = MiniMessage.builder()
-                .tags(TagResolver.builder()
-                        .resolver(StandardTags.color())
-                        .resolver(StandardTags.decorations())
-                        .build()
-                )
-                .build();
-
         this.commandHandler = new CommandHandler(this);
+        this.dataHandler = new DataHandler(this);
+
+        logger.info("AutoVMessages has been initialized. Automatic messages will begin in " +
+                this.configHandler.getConfig().node("interval").getString() + " seconds.");
     }
 
     public void reload() {
-        this.logger.info("RELOAD HERE");
+        this.getConfigHandler().loadConfig(this);
+        this.getMessageHandler().loadLang(this);
     }
 }

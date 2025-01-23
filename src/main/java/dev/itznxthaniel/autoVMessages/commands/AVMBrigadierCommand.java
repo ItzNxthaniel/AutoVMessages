@@ -10,15 +10,14 @@ import dev.itznxthaniel.autoVMessages.AutoVMessages;
 import net.kyori.adventure.text.Component;
 
 public final class AVMBrigadierCommand {
-    public static BrigadierCommand createBrigadierCommand(final ProxyServer proxy) {
+    public static BrigadierCommand createBrigadierCommand(AutoVMessages plugin) {
+        final ProxyServer proxy = plugin.getServer();
+
         LiteralCommandNode<CommandSource> avmNode = BrigadierCommand.literalArgumentBuilder("autovmessages")
                 .executes(context -> {
                     CommandSource source = context.getSource();
 
-                    Component message = AutoVMessages.getInstance().getMiniMessage().deserialize(
-                            "<#202020>[<#CC3333>AutoVMessage<#202020>] "
-                    );
-                    source.sendMessage(message);
+                    plugin.getMessageHandler().sendPluginResponse(source, "autovmessages.command.avm.core-successful");
 
                     return Command.SINGLE_SUCCESS;
                 })

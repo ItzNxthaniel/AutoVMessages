@@ -7,5 +7,6 @@ autovmessages:
   command:
     no-perms: "<gray>You do not have permission to run this command."
     avm:
-      core-successful: "<gray>Version: <red>v1.0.0-SNAPSHOT."
-      reload-successful: "<gray>Reloading AutoVMessage."
+      core-successful: "<gray>Version: <red>{pluginVersion}."
+      reload-in-progress: "<gray>Reloading AutoVMessage."
+      reload-successful: "<gray>Reload was successful."
